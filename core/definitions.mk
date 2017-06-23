@@ -2724,6 +2724,7 @@ $(hide) if ! $(ZIPALIGN) -c $(ZIPALIGN_PAGE_ALIGN_FLAGS) 4 $@ >/dev/null ; then 
   mv $@ $@.unaligned; \
   $(ZIPALIGN) \
     -f \
+    -z \
     $(ZIPALIGN_PAGE_ALIGN_FLAGS) \
     4 \
     $@.unaligned $@.aligned; \
