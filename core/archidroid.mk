@@ -41,11 +41,11 @@ ARCHIDROID_GCC_CFLAGS := -O3 -fgcse-las -fgcse-sm -fipa-pta -fomit-frame-pointer
 # Results with other toolchains may vary
 
 # These flags work fine in suggested compiler, but may cause ICEs in other compilers, comment if needed
-ARCHIDROID_GCC_CFLAGS += -fgraphite -fgraphite-identity
+ARCHIDROID_GCC_CFLAGS += -fgraphite -fgraphite-identity -floop-strip-mine -floop-nest-optimize -floop-parallelize-all
 
 # The following flags (-floop) require that your GCC has been configured with --with-isl
 # Additionally, applying any of them will most likely cause ICE in your compiler, so they're disabled
-# ARCHIDROID_GCC_CFLAGS += -floop-block -floop-interchange -floop-nest-optimize -floop-parallelize-all -floop-strip-mine
+# ARCHIDROID_GCC_CFLAGS += -floop-block -floop-interchange
 
 # These flags have been disabled because of assembler errors
 # ARCHIDROID_GCC_CFLAGS += -fmodulo-sched -fmodulo-sched-allow-regmoves
@@ -58,20 +58,20 @@ ARCHIDROID_GCC_CFLAGS += -fgraphite -fgraphite-identity
 ARCHIDROID_GCC_CPPFLAGS := $(ARCHIDROID_GCC_CFLAGS)
 
 # Flags passed to linker (ld) of all C and C++ targets compiled with GCC
-ARCHIDROID_GCC_LDFLAGS := -Wl,--sort-common
+# ARCHIDROID_GCC_LDFLAGS := -Wl,--sort-common
 
 #####################
 ### CLANG SECTION ###
 #####################
 
 # Flags passed to all C targets compiled with CLANG
-ARCHIDROID_CLANG_CFLAGS := -O3 -Qunused-arguments -Wno-unknown-warning-option
+ARCHIDROID_CLANG_CFLAGS := -O3 -Qunused-arguments -Wno-unknown-warning-option -mcpu=krait
 
 # Flags passed to CLANG preprocessor for C and C++
 ARCHIDROID_CLANG_CPPFLAGS := $(ARCHIDROID_CLANG_CFLAGS)
 
 # Flags passed to linker (ld) of all C and C++ targets compiled with CLANG
-ARCHIDROID_CLANG_LDFLAGS := -Wl,--sort-common
+# ARCHIDROID_CLANG_LDFLAGS := -Wl,--sort-common
 
 # Flags that are used by GCC, but are unknown to CLANG. If you get "argument unused during compilation" error, add the flag here
 ARCHIDROID_CLANG_UNKNOWN_FLAGS := \
@@ -100,20 +100,98 @@ ARCHIDROID_CLANG_UNKNOWN_FLAGS := \
   -ftree-loop-im \
   -ftree-loop-ivcanon \
   -funsafe-loop-optimizations \
-  -fweb
+  -fweb \
+  -fivopts \
+  -ftracer \
 
-#####################
-### HACKS SECTION ###
-#####################
+#####################################
+# UBER-ify ArchiDroid Optimizations #
+#####################################
 
-# Most of the flags are increasing code size of the output binaries, especially O3 instead of Os for target THUMB
-# This may become problematic for small blocks, especially for boot or recovery blocks (ramdisks)
-# If you don't care about the size of recovery.img, e.g. you have no use of it, and you want to silence the
-# error "image too large" for recovery.img, use this definition
-#
-# NOTICE: It's better to use device-based flag TARGET_NO_RECOVERY instead, but some devices may have
-# boot + recovery combo (e.g. Sony Xperias), and we must build recovery for them, so we can't set TARGET_NO_RECOVERY globally
-# Therefore, this seems like a safe approach (will only ignore check on recovery.img, without doing anything else)
-# However, if you use compiled recovery.img for your device, please disable this flag (comment or set to false), and lower
-# optimization levels instead
-ARCHIDROID_IGNORE_RECOVERY_SIZE := true
+CUSTOM_FLAGS := -O3 -g0 -DNDEBUG
+ifneq ($(LOCAL_SDCLANG_LTO),true)
+  ifeq ($(my_clang),true)
+    ifndef LOCAL_IS_HOST_MODULE
+      CUSTOM_FLAGS += -fuse-ld=qcld
+    else
+      CUSTOM_FLAGS += -fuse-ld=gold
+    endif
+  else
+    CUSTOM_FLAGS += -fuse-ld=gold
+  endif
+else
+  CUSTOM_FLAGS := -O3 -g0 -DNDEBUG
+endif
+
+O_FLAGS := -O3 -O2 -Os -O1 -O0 -Og -Oz
+
+# Remove all flags we don't want use high level of optimization
+my_cflags := $(filter-out -Wall -Werror -g -Wextra -Weverything $(O_FLAGS),$(my_cflags)) $(CUSTOM_FLAGS)
+my_cppflags := $(filter-out -Wall -Werror -g -Wextra -Weverything $(O_FLAGS),$(my_cppflags)) $(CUSTOM_FLAGS)
+my_conlyflags := $(filter-out -Wall -Werror -g -Wextra -Weverything $(O_FLAGS),$(my_conlyflags)) $(CUSTOM_FLAGS)
+
+#######
+# IPA #
+#######
+
+LOCAL_DISABLE_IPA := \
+	bluetooth.default
+
+ifndef LOCAL_IS_HOST_MODULE
+  ifeq (,$(filter true,$(my_clang)))
+    ifneq (1,$(words $(filter $(LOCAL_DISABLE_IPA),$(LOCAL_MODULE))))
+      my_cflags += -fipa-pta
+    endif
+  else
+    ifneq (1,$(words $(filter $(LOCAL_DISABLE_IPA),$(LOCAL_MODULE))))
+      my_cflags += -analyze -analyzer-purge
+    endif
+  endif
+endif
+
+##########
+# OpenMP #
+##########
+
+LOCAL_DISABLE_OPENMP := \
+	bluetooth.default \
+	libF77blas \
+	libF77blasV8 \
+	libjni_latinime \
+	libyuv_static \
+	mdnsd
+
+ifndef LOCAL_IS_HOST_MODULE
+  ifneq (1,$(words $(filter $(LOCAL_DISABLE_OPENMP),$(LOCAL_MODULE))))
+    my_cflags += -lgomp -lgcc -fopenmp
+    my_ldflags += -fopenmp
+  endif
+endif
+
+###################
+# Strict Aliasing #
+###################
+
+LOCAL_DISABLE_STRICT := \
+	bluetooth.default \
+	mdnsd
+
+STRICT_ALIASING_FLAGS := \
+	-fstrict-aliasing \
+	-Werror=strict-aliasing
+
+STRICT_GCC_LEVEL := \
+	-Wstrict-aliasing=3
+
+STRICT_CLANG_LEVEL := \
+	-Wstrict-aliasing=2
+
+# Remove the no-strict-aliasing flags
+my_cflags := $(filter-out -fno-strict-aliasing,$(my_cflags))
+ifneq (1,$(words $(filter $(LOCAL_DISABLE_STRICT),$(LOCAL_MODULE))))
+  ifeq (,$(filter true,$(my_clang)))
+    my_cflags += $(STRICT_ALIASING_FLAGS) $(STRICT_GCC_LEVEL)
+  else
+    my_cflags += $(STRICT_ALIASING_FLAGS) $(STRICT_CLANG_LEVEL)
+  endif
+endif
