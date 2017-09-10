@@ -159,7 +159,8 @@ LOCAL_DISABLE_OPENMP := \
 	libF77blasV8 \
 	libjni_latinime \
 	libyuv_static \
-	mdnsd
+	mdnsd \
+	libGLESv1_CM
 
 ifndef LOCAL_IS_HOST_MODULE
   ifneq (1,$(words $(filter $(LOCAL_DISABLE_OPENMP),$(LOCAL_MODULE))))
@@ -174,7 +175,8 @@ endif
 
 LOCAL_DISABLE_STRICT := \
 	bluetooth.default \
-	mdnsd
+	mdnsd \
+	camera.$(TARGET_BOARD_PLATFORM)
 
 STRICT_ALIASING_FLAGS := \
 	-fstrict-aliasing \
