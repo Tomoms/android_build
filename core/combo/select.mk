@@ -41,7 +41,7 @@ $(combo_var_prefix)RELEASE_CFLAGS := $(ARCHIDROID_GCC_CFLAGS_ARM) $(BOARD_RELEAS
 $(combo_var_prefix)GLOBAL_CPPFLAGS := $(BOARD_GLOBAL_CPPFLAGS)
 
 $(combo_var_prefix)GLOBAL_LDFLAGS :=
-$(combo_var_prefix)GLOBAL_ARFLAGS := cqsD
+$(combo_var_prefix)GLOBAL_ARFLAGS := crsPD
 $(combo_var_prefix)GLOBAL_LD_DIRS :=
 
 $(combo_var_prefix)EXECUTABLE_SUFFIX :=
