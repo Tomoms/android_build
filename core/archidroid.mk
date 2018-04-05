@@ -30,7 +30,7 @@ ARCHIDROID_GCC_CFLAGS_ARM := -O3 -mcpu=cortex-a15
 ARCHIDROID_GCC_CFLAGS_THUMB := -O3 -mcpu=cortex-a15
 
 # Additional flags passed to all C targets compiled with GCC
-ARCHIDROID_GCC_CFLAGS := -O3 -fgcse-las -fgcse-sm -fipa-pta -fomit-frame-pointer -frename-registers -fsection-anchors -ftree-loop-im -ftree-loop-ivcanon -funsafe-loop-optimizations -funswitch-loops -fweb -Wno-error=array-bounds -Wno-error=clobbered -Wno-error=maybe-uninitialized -Wno-error=strict-overflow -mcpu=cortex-a15
+ARCHIDROID_GCC_CFLAGS := -O3 -fgcse-las -fgcse-sm -fipa-pta -fomit-frame-pointer -frename-registers -fsection-anchors -ftree-loop-im -ftree-loop-ivcanon -funsafe-loop-optimizations -funswitch-loops -fweb -Wno-error=array-bounds -Wno-error=clobbered -Wno-error=maybe-uninitialized -Wno-error=strict-overflow -mcpu=cortex-a15 -mvectorize-with-neon-quad
 
 ############################
 ### EXPERIMENTAL SECTION ###
@@ -41,7 +41,7 @@ ARCHIDROID_GCC_CFLAGS := -O3 -fgcse-las -fgcse-sm -fipa-pta -fomit-frame-pointer
 # Results with other toolchains may vary
 
 # These flags work fine in suggested compiler, but may cause ICEs in other compilers, comment if needed
-ARCHIDROID_GCC_CFLAGS += -fgraphite -fgraphite-identity -floop-strip-mine -floop-nest-optimize -floop-parallelize-all
+# ARCHIDROID_GCC_CFLAGS += -fgraphite -fgraphite-identity -floop-strip-mine -floop-nest-optimize -floop-parallelize-all
 
 # The following flags (-floop) require that your GCC has been configured with --with-isl
 # Additionally, applying any of them will most likely cause ICE in your compiler, so they're disabled
