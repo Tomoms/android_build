@@ -314,6 +314,8 @@ $(hide) otool -l $(1) | grep LC_ID_DYLIB -A 5 > $(2)
 $(hide) nm -gP $(1) | cut -f1-2 -d" " | (grep -v U$$ >> $(2) || true)
 endef
 
+include $(BUILD_SYSTEM)/uberopts.mk
+
 combo_target := HOST_
 combo_2nd_arch_prefix :=
 include $(BUILD_SYSTEM)/combo/select.mk

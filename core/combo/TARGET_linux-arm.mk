@@ -65,6 +65,8 @@ define $(combo_var_prefix)transform-shared-lib-to-toc
 $(call _gen_toc_command_for_elf,$(1),$(2))
 endef
 
+include $(BUILD_SYSTEM)/uberopts.mk
+
 $(combo_2nd_arch_prefix)TARGET_PACK_MODULE_RELOCATIONS := true
 
 $(combo_2nd_arch_prefix)TARGET_LINKER := /system/bin/linker

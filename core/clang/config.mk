@@ -5,6 +5,8 @@ LLVM_RTLIB_PATH := $(LLVM_PREBUILTS_PATH)/../lib64/clang/$(LLVM_RELEASE_VERSION)
 CLANG_TBLGEN := $(BUILD_OUT_EXECUTABLES)/clang-tblgen$(BUILD_EXECUTABLE_SUFFIX)
 LLVM_TBLGEN := $(BUILD_OUT_EXECUTABLES)/llvm-tblgen$(BUILD_EXECUTABLE_SUFFIX)
 
+include $(BUILD_SYSTEM)/uberopts.mk
+
 define convert-to-clang-flags
 $(strip $(filter-out $(CLANG_CONFIG_UNKNOWN_CFLAGS),$(1)))
 endef
