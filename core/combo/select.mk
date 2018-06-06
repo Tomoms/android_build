@@ -26,6 +26,8 @@ combo_os_arch := $($(combo_target)OS)-$($(combo_target)$(combo_2nd_arch_prefix)A
 
 combo_var_prefix := $(combo_2nd_arch_prefix)$(combo_target)
 
+include $(BUILD_SYSTEM)/uberopts.mk
+
 # Set reasonable defaults for the various variables
 
 $(combo_var_prefix)GLOBAL_ARFLAGS := crsPD
