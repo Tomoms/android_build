@@ -375,7 +375,7 @@ TARGET_CPU_ABI_LIST_32_BIT := $(subst $(space),$(comma),$(strip $(TARGET_CPU_ABI
 TARGET_CPU_ABI_LIST_64_BIT := $(subst $(space),$(comma),$(strip $(TARGET_CPU_ABI_LIST_64_BIT)))
 
 # GCC version selection
-TARGET_GCC_VERSION := 6.x
+TARGET_GCC_VERSION := 7.x
 ifdef TARGET_2ND_ARCH
 2ND_TARGET_GCC_VERSION := 4.9
 endif
