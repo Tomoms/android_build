@@ -22,7 +22,7 @@ endif
 # ArchiDroid GCC #
 ##################
 
-ARCHI_FLAGS := -fgcse-las -fgcse-sm -fipa-pta -fivopts -fomit-frame-pointer -frename-registers -fsection-anchors -ftracer -ftree-loop-im -ftree-loop-ivcanon -funsafe-loop-optimizations -funswitch-loops -fweb -fgraphite -fgraphite-identity -floop-strip-mine -floop-nest-optimize -floop-parallelize-all -Wno-error=array-bounds -Wno-error=clobbered -Wno-error=maybe-uninitialized -Wno-error=strict-overflow
+ARCHI_FLAGS := -fgcse-las -fgcse-sm -fipa-pta -fivopts -fomit-frame-pointer -frename-registers -fsection-anchors -ftracer -ftree-loop-im -ftree-loop-ivcanon -funsafe-loop-optimizations -funswitch-loops -fweb -fgraphite -fgraphite-identity -floop-strip-mine -floop-nest-optimize -floop-parallelize-all -Wno-error=array-bounds -Wno-error=clobbered -Wno-error=maybe-uninitialized -Wno-error=strict-overflow -Wno-error=misleading-indentation
 CUSTOM_FLAGS += $(ARCHI_FLAGS)
 
 ifeq ($(my_clang),true)
