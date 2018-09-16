@@ -614,6 +614,9 @@ my_target_global_conlyflags := $($(LOCAL_2ND_ARCH_VAR_PREFIX)CLANG_$(my_prefix)G
 my_target_global_cppflags := $($(LOCAL_2ND_ARCH_VAR_PREFIX)CLANG_$(my_prefix)GLOBAL_CPPFLAGS) $(my_cpp_std_cppflags)
 my_target_global_ldflags := $($(LOCAL_2ND_ARCH_VAR_PREFIX)CLANG_$(my_prefix)GLOBAL_LDFLAGS)
 ifeq ($(my_sdclang),true)
+    my_target_global_cflags += $(SDCLANG_COMMON_FLAGS)
+    my_target_global_conlyflags += $(SDCLANG_COMMON_FLAGS)
+    my_target_global_cppflags += $(SDCLANG_COMMON_FLAGS)
     ifeq ($(strip $(my_cc)),)
         my_cc := $(my_cc_wrapper) $(SDCLANG_PATH)/clang
     endif
