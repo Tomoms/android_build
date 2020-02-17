@@ -22,7 +22,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/base_product.mk)
 
 # /product packages
 PRODUCT_PACKAGES += \
-    webview \
+    TrichromeWebView \
 
 # Allowlist for packages included in media_product.mk
 PRODUCT_PACKAGES += preinstalled-packages-media-product.xml
