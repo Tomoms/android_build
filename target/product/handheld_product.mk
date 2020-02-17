@@ -30,12 +30,12 @@ PRODUCT_PACKAGES += \
 
 ifeq ($(LINEAGE_BUILD),)
 PRODUCT_PACKAGES += \
-    Browser2 \
     Calendar \
     Camera2 \
     Gallery2 \
     LatinIME \
-    Music
+    Music \
+    TrichromeChrome
 endif
 
 PRODUCT_PACKAGES_DEBUG += \
