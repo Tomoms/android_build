@@ -48,8 +48,7 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     dalvik.vm.usejit=true \
     dalvik.vm.usejitprofiles=true \
     dalvik.vm.dexopt.secondary=true \
-    dalvik.vm.appimageformat=lz4 \
-    dalvik.vm.gctype=GSS
+    dalvik.vm.appimageformat=lz4
 
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     ro.dalvik.vm.native.bridge=0
