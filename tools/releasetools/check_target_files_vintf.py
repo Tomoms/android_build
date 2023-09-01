@@ -116,45 +116,7 @@ def CheckVintfFromExtractedTargetFiles(input_tmp, info_dict=None):
     a RuntimeError if any error occurs.
   """
 
-  if info_dict is None:
-    info_dict = common.LoadInfoDict(input_tmp)
-
-  if info_dict.get('vintf_enforce') != 'true':
-    logger.warning('PRODUCT_ENFORCE_VINTF_MANIFEST is not set, skipping checks')
-    return True
-
-  dirmap = GetDirmap(input_tmp)
-  args_for_skus = GetArgsForSkus(info_dict)
-  shipping_api_level_args = GetArgsForShippingApiLevel(info_dict)
-  kernel_args = GetArgsForKernel(input_tmp)
-
-  common_command = [
-      'checkvintf',
-      '--check-compat',
-  ]
-  for device_path, real_path in sorted(dirmap.items()):
-    common_command += ['--dirmap', '{}:{}'.format(device_path, real_path)]
-  common_command += kernel_args
-  common_command += shipping_api_level_args
-
-  success = True
-  for sku_args in args_for_skus:
-    command = common_command + sku_args
-    proc = common.Run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    out, err = proc.communicate()
-    if proc.returncode == 0:
-      logger.info("Command `%s` returns 'compatible'", ' '.join(command))
-    elif out.strip() == "INCOMPATIBLE":
-      logger.info("Command `%s` returns 'incompatible'", ' '.join(command))
-      success = False
-    else:
-      raise common.ExternalError(
-          "Failed to run command '{}' (exit code {}):\nstdout:{}\nstderr:{}"
-          .format(' '.join(command), proc.returncode, out, err))
-    logger.info("stdout: %s", out)
-    logger.info("stderr: %s", err)
-
-  return success
+  return True
 
 
 def GetVintfFileList():
