@@ -48,6 +48,7 @@ PRODUCT_PACKAGES += \
     DownloadProviderUi \
     EasterEgg \
     ExternalStorageProvider \
+    F-DroidPrivilegedExtension \
     FusedLocation \
     InputDevices \
     KeyChain \
