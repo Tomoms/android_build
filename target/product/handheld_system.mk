@@ -59,6 +59,7 @@ PRODUCT_PACKAGES += \
     MtpService \
     MusicFX \
     PacProcessor \
+    Pif \
     preinstalled-packages-platform-handheld-system.xml \
     PrintRecommendationService \
     PrintSpooler \
