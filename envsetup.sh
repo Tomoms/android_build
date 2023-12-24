@@ -2138,7 +2138,6 @@ if [ -z ${CCACHE_EXEC} ]; then
         if [ -z ${CCACHE_DIR} ]; then
             export CCACHE_DIR=${HOME}/.ccache
         fi
-        $ccache_path -o compression=true
         echo -e "ccache enabled and CCACHE_EXEC has been set to : $ccache_path"
     else
         echo -e "ccache not found installed!"
