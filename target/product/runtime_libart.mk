@@ -154,8 +154,8 @@ PRODUCT_SYSTEM_PROPERTIES += \
 
 # Enable minidebuginfo generation unless overridden.
 PRODUCT_SYSTEM_PROPERTIES += \
-    dalvik.vm.minidebuginfo=true \
-    dalvik.vm.dex2oat-minidebuginfo=true
+    dalvik.vm.minidebuginfo=false \
+    dalvik.vm.dex2oat-minidebuginfo=false
 
 # Enable Madvising of the whole art, odex and vdex files to MADV_WILLNEED.
 # The size specified here is the size limit of how much of the file
