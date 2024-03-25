@@ -68,7 +68,6 @@ PRODUCT_PACKAGES += \
     android.hardware.radio.config@1.0 \
     android.hardware.radio.deprecated@1.0 \
     android.hardware.secure_element@1.0 \
-    android.hardware.wifi \
     libaudio-resampler \
     libaudiohal \
     libdrm \
@@ -102,6 +101,7 @@ PRODUCT_HOST_PACKAGES += \
 PRODUCT_PACKAGES += \
     libaudiopolicyengineconfigurable \
     libpolicy-subsystem
+
 
 # Include all zygote init scripts. "ro.zygote" will select one of them.
 PRODUCT_COPY_FILES += \
