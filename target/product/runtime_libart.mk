@@ -110,20 +110,20 @@ PRODUCT_SYSTEM_PROPERTIES += \
 # without exceptions).
 # TODO(b/243646876): Remove `pm.dexopt.post-boot`.
 PRODUCT_SYSTEM_PROPERTIES += \
-    pm.dexopt.post-boot?=speed \
-    pm.dexopt.first-boot=speed \
+    pm.dexopt.post-boot?=speed-profile \
+    pm.dexopt.first-boot=speed-profile \
     pm.dexopt.boot-after-ota=speed-profile \
     pm.dexopt.boot-after-mainline-update?=speed-profile \
-    pm.dexopt.install?=speed \
-    pm.dexopt.install-fast?=speed \
-    pm.dexopt.install-bulk?=speed \
-    pm.dexopt.install-bulk-secondary?=speed \
-    pm.dexopt.install-bulk-downgraded?=speed \
-    pm.dexopt.install-bulk-secondary-downgraded?=speed \
-    pm.dexopt.bg-dexopt?=speed \
+    pm.dexopt.install?=speed-profile \
+    pm.dexopt.install-fast?=speed-profile \
+    pm.dexopt.install-bulk?=speed-profile \
+    pm.dexopt.install-bulk-secondary?=speed-profile \
+    pm.dexopt.install-bulk-downgraded?=speed-profile \
+    pm.dexopt.install-bulk-secondary-downgraded?=speed-profile \
+    pm.dexopt.bg-dexopt?=speed-profile \
     pm.dexopt.ab-ota?=speed-profile \
-    pm.dexopt.inactive?=speed \
-    pm.dexopt.cmdline?=speed \
+    pm.dexopt.inactive?=speed-profile \
+    pm.dexopt.cmdline?=speed-profile \
     pm.dexopt.shared?=speed
 
 WITH_DEXPREOPT_ART_BOOT_IMG_ONLY := false
