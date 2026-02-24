@@ -120,9 +120,9 @@ PRODUCT_SYSTEM_PROPERTIES += \
     pm.dexopt.install-bulk-secondary?=verify \
     pm.dexopt.install-bulk-downgraded?=verify \
     pm.dexopt.install-bulk-secondary-downgraded?=verify \
-    pm.dexopt.bg-dexopt?=speed-profile \
+    pm.dexopt.bg-dexopt?=speed \
     pm.dexopt.ab-ota?=speed-profile \
-    pm.dexopt.inactive?=verify \
+    pm.dexopt.inactive?=speed-profile \
     pm.dexopt.cmdline?=verify \
     pm.dexopt.shared?=speed
 
