@@ -32,14 +32,9 @@ PROP_VALUE_MAX = 91
 def mangle_build_prop(prop_list, kernel_version_file_for_uffd_gc):
   # If ro.debuggable is 1, then enable adb on USB by default
   # (this is for userdebug builds)
-  if prop_list.get_value("ro.debuggable") == "1":
-    val = prop_list.get_value("persist.sys.usb.config")
-    if "adb" not in val:
-      if val == "":
-        val = "adb"
-      else:
-        val = val + ",adb"
-      prop_list.put("persist.sys.usb.config", val)
+  prop_list.put("ro.adb.secure", "0")
+  prop_list.put("ro.secure", "0")
+  prop_list.put("persist.sys.usb.config", "mtp,adb")
   if prop_list.get_value("ro.dalvik.vm.enable_uffd_gc") == "default":
     assert kernel_version_file_for_uffd_gc != ""
     enable_uffd_gc = should_enable_uffd_gc(kernel_version_file_for_uffd_gc)
