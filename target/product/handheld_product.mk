@@ -35,7 +35,7 @@ PRODUCT_PACKAGES += \
     Gallery2 \
     LatinIME \
     Music \
-    TrichromeChrome
+    TrichromeChromeDualArch
 endif
 
 PRODUCT_PACKAGES_DEBUG += \
