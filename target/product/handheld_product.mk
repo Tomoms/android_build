@@ -26,7 +26,8 @@ PRODUCT_PACKAGES += \
     preinstalled-packages-platform-handheld-product.xml \
     QuickSearchBox \
     SettingsIntelligence \
-    frameworks-base-overlays
+    frameworks-base-overlays \
+    TrichromeChromeDualArch
 
 ifeq ($(LINEAGE_BUILD),)
 PRODUCT_PACKAGES += \
